@@ -25,6 +25,36 @@ class BookControllers extends Controller
         return $booklist ;
     }
 
+    //Sort by category :monahan
+    public function Sort_by_category($id){
+        $category_book= DB::table('category')->orderby('id','desc')->get();
+        $booklistsort = DB::table('book')
+        ->join('category','book.category_id','=','category.id')
+        ->where('category.id',$id)
+        ->get();
+        return $booklistsort;
+    }
+
+    //Sort by author
+    public function Sort_by_author($id){
+        $author_book= DB::table('author')->orderby('id','desc')->get();
+        $booklistsort = DB::table('book')
+        ->join('author','book.author_id','=','author.id')
+        ->where('author.id',$id)
+        ->get();
+        return $booklistsort;
+    }
+
+    //Sort by star
+    public function Sort_by_star($id){
+        $author_book= DB::table('book')->orderby('id','desc')->get();
+        $booklistsort = DB::table('review')
+        ->join('book','review.book_id','=','review.id')
+        ->where('review.rating_start',$id)
+        ->get();
+        return $booklistsort;
+    }
+
     public function show_20_per_page()
     {
         $booklist = Book::orderby('id','DESC')->paginate(20);
@@ -36,6 +66,21 @@ class BookControllers extends Controller
         $booklist = Book::orderby('id','DESC')->paginate(30);
 
         return $booklist ;
+    }
+
+    public function Top8bookRecomment(){
+        $recommentbook = DB::table('book')
+        ->join('review','book.id','=','review.book_id')
+        ->leftJoin('discount','book.id','=','discount.book_id')
+        ->select('review.book_id')
+        ->selectRaw('avg(review.rating_start) as avg_ratingstar')
+        ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
+        ->groupby('review.book_id', 'discount.discount_price','book.book_price')
+        ->orderByDesc('avg_ratingstar')
+        ->orderBy('final_price')
+        ->get();
+
+        return $recommentbook;
     }
     /**
      * Store a newly created resource in storage.
@@ -59,19 +104,19 @@ class BookControllers extends Controller
         // $bookdetail = Book::find($id);
         // return $bookdetail;
 
+        // $author_book= DB::table('author')->orderby('id','desc')->get();
+        // $category_book= DB::table('category')->orderby('id','desc')->get();
+        // $bookdetail = DB::table('book')
+        // ->join('category','book.category_id','=','category.id')
+        // ->join('author','book.author_id','=','author.id')
+        // ->where('book.id',$id)->get();
+        // return $bookdetail;
+        
 
-        $bookdetail = Book::find($id)
-        ->join('author','author.id','=','book.author_id')
-        ->join('categoty','categoty.id','=','book.categoty_id')
-        ->select(['book.*','author.author_name','categoty.categoty_name'])->get();
 
+        $bookdetail = \App\Models\Book::with(['author','category'])->get();
         return $bookdetail;
 
-        // $bookdetail = DB::table('book')
-        // ->john('author','book.author_id','=','author.id')
-        // ->john('categoty','book.categoty_id','=','categoty.id')
-        // ->where('author.id','=',$id)->get();
-        // return Response::json($bookdetail);
     }
 
     /**
