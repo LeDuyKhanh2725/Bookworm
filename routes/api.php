@@ -41,10 +41,25 @@ Route::get('/about-pages', function () {
 //book list
 Route::resource('/book-list',BookControllers::class);
 
+//book list/ sort by cate
+Route::get('/sort-by-cate/{id}',[BookControllers::class,'Sort_by_category']);
+
+//book list/ sort by author
+Route::get('/sort-by-author/{id}',[BookControllers::class,'Sort_by_author']);
+
+//book list/ sort by star
+Route::get('/sort-by-star/{id}',[BookControllers::class,'Sort_by_star']);
+
+
+
 //book list/show20
 Route::get('/show-20',[BookControllers::class,'show_20_per_page']);
 //book list/show30
 Route::get('/show-30',[BookControllers::class,'show_30_per_page']);
+
+
+//Home top8 recomment
+Route::get('/top-8-recomment',[BookControllers::class,'Top8bookRecomment']);
 
 
 
