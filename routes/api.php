@@ -40,7 +40,18 @@ Route::get('/about-pages', function () {
 
 //book list
 Route::resource('/book-list',BookControllers::class);
+
+//book list/show20
+Route::get('/show-20',[BookControllers::class,'show_20_per_page']);
+//book list/show30
+Route::get('/show-30',[BookControllers::class,'show_30_per_page']);
+
+
+
+//Order
 Route::resource('/order',OrderControllers::class);
+
+
 
 
 
