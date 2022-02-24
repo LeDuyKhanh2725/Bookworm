@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Eloquent;
 
 class Author extends Model
 {
@@ -11,4 +12,8 @@ class Author extends Model
 
     public $timestamps = false;
     protected $table = 'author';
+
+    public function Book(){
+        return $this->hasMany('App\Models\Book');
+    }
 }
