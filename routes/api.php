@@ -59,8 +59,14 @@ Route::get('/show-30',[BookControllers::class,'show_30_per_page']);
 
 
 //Home top8 recomment
-Route::get('/top-8-recomment',[BookControllers::class,'Top8bookRecomment']);
+Route::get('/top-8-recomment',[BookControllers::class,'BookRecomment']);
 
+//Book most discount(carousel)
+Route::get('/book-most-discount',[BookControllers::class,'Bookmostdiscount']);
+Route::get('/all-book-most-discount',[BookControllers::class,'Allbookmostdiscount']);
+
+//Book popular
+Route::get('/book-most-popular',[BookControllers::class,'Bookpopular']);
 
 
 //Order
