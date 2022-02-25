@@ -25,14 +25,14 @@ class BookControllers extends Controller
         return $booklist ;
     }
 
-    //Sort by category :monahan
+    //Sort by category 
     public function Sort_by_category($id){
         $category_book= DB::table('category')->orderby('id','desc')->get();
-        $booklistsort = DB::table('book')
+        $bookfiltercate = DB::table('book')
         ->join('category','book.category_id','=','category.id')
         ->where('category.id',$id)
         ->get();
-        return $booklistsort;
+        return $bookfiltercate;
     }
 
     //Sort by author
@@ -68,20 +68,60 @@ class BookControllers extends Controller
         return $booklist ;
     }
 
-    public function Top8bookRecomment(){
+    public function BookRecomment(){
         $recommentbook = DB::table('book')
         ->join('review','book.id','=','review.book_id')
         ->leftJoin('discount','book.id','=','discount.book_id')
         ->select('review.book_id')
         ->selectRaw('avg(review.rating_start) as avg_ratingstar')
         ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
-        ->groupby('review.book_id', 'discount.discount_price','book.book_price')
+        ->groupBy('review.book_id', 'discount.discount_price','book.book_price')
         ->orderByDesc('avg_ratingstar')
         ->orderBy('final_price')
+        ->limit(8)
         ->get();
 
         return $recommentbook;
     }
+    public function Bookpopular(){
+        $popularbook = DB::table('book')
+        ->leftJoin('discount','book.id','=','discount.book_id')
+        ->join('review','book.id','=','review.book_id')
+        ->select('review.book_id')
+        ->selectRaw('count(review.rating_start) as total_review')
+        ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
+        ->groupBy('review.book_id', 'discount.discount_price','book.book_price')
+        ->orderByDesc('total_review')
+        ->orderBy('final_price')
+        ->limit(10)
+        ->get();
+        return $popularbook;
+    }
+
+    public function Bookmostdiscount(){
+        $bookcarousel = DB::table('book')
+        ->join('discount','book.id','=','discount.book_id')
+        ->select('book.id')
+        ->selectRaw('book.book_price-discount.discount_price as discount_sub')
+        ->orderByDesc('discount_sub')
+        ->limit(10)
+        ->get();
+
+        return $bookcarousel;
+    }
+
+    public function Allbookmostdiscount(){
+        $allbookcarousel = DB::table('book')
+        ->join('discount','book.id','=','discount.book_id')
+        ->select('book.id')
+        ->selectRaw('book.book_price-discount.discount_price as discount_sub')
+        ->orderByDesc('discount_sub')
+        ->get();
+
+        return $allbookcarousel;
+    }
+
+    
     /**
      * Store a newly created resource in storage.
      *
