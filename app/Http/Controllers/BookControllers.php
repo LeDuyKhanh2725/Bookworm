@@ -25,8 +25,8 @@ class BookControllers extends Controller
         return $booklist ;
     }
 
-    //Sort by category 
-    public function Sort_by_category($id){
+    //Filter by category 
+    public function Filter_by_category($id){
         $category_book= DB::table('category')->orderby('id','desc')->get();
         $bookfiltercate = DB::table('book')
         ->join('category','book.category_id','=','category.id')
@@ -35,8 +35,8 @@ class BookControllers extends Controller
         return $bookfiltercate;
     }
 
-    //Sort by author
-    public function Sort_by_author($id){
+    //Filter by author
+    public function Filter_by_author($id){
         $author_book= DB::table('author')->orderby('id','desc')->get();
         $booklistsort = DB::table('book')
         ->join('author','book.author_id','=','author.id')
@@ -45,8 +45,8 @@ class BookControllers extends Controller
         return $booklistsort;
     }
 
-    //Sort by star
-    public function Sort_by_star($id){
+    //Filter by star
+    public function Filter_by_star($id){
         $author_book= DB::table('book')->orderby('id','desc')->get();
         $booklistsort = DB::table('review')
         ->join('book','review.book_id','=','review.id')
@@ -54,6 +54,53 @@ class BookControllers extends Controller
         ->get();
         return $booklistsort;
     }
+
+    public function Sort_by_onsale(){
+        $discount_book = DB::table('discount')->get();
+        $book_onsale = DB::table('book')
+        ->join('discount','book.id','=','discount.book_id')
+        ->select('book.id')
+        ->get();
+        return $book_onsale;
+    }
+
+    public function Sort_by_popular(){
+        $popularbook = DB::table('book')
+        ->leftJoin('discount','book.id','=','discount.book_id')
+        ->join('review','book.id','=','review.book_id')
+        ->select('review.book_id')
+        ->selectRaw('count(review.rating_start) as total_review')
+        ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
+        ->groupBy('review.book_id', 'discount.discount_price','book.book_price')
+        ->orderByDesc('total_review')
+        ->orderBy('final_price')
+        ->get();
+        return $popularbook;
+    }
+    public function Sort_lowtohigh_price(){
+        $discount = DB::table('discount')->get();
+        $sort_low = DB::table('book')
+        ->leftJoin('discount','book.id','=','discount.book_id')
+        ->select('book.id')
+        ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
+        ->groupBy('book.id', 'discount.discount_price','book.book_price')
+        ->orderBy('final_price')
+        ->get();
+        return $sort_low;
+    }
+
+    public function Sort_hightolow_price(){
+        $discount = DB::table('discount')->get();
+        $sort_high = DB::table('book')
+        ->leftJoin('discount','book.id','=','discount.book_id')
+        ->select('book.id')
+        ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
+        ->groupBy('book.id', 'discount.discount_price','book.book_price')
+        ->orderByDesc('final_price')
+        ->get();
+        return $sort_high;
+    }
+
 
     public function show_20_per_page()
     {
@@ -67,6 +114,8 @@ class BookControllers extends Controller
 
         return $booklist ;
     }
+
+    
 
     public function BookRecomment(){
         $recommentbook = DB::table('book')

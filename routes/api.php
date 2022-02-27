@@ -41,14 +41,27 @@ Route::get('/about-pages', function () {
 //book list
 Route::resource('/book-list',BookControllers::class);
 
-//book list/ sort by cate
-Route::get('/sort-by-cate/{id}',[BookControllers::class,'Sort_by_category']);
+//book list/ filter by cate
+Route::get('/filter-by-cate/{id}',[BookControllers::class,'Filter_by_category']);
 
-//book list/ sort by author
-Route::get('/sort-by-author/{id}',[BookControllers::class,'Sort_by_author']);
+//book list/ filter by author
+Route::get('/filter-by-author/{id}',[BookControllers::class,'Filter_by_author']);
 
-//book list/ sort by star
-Route::get('/sort-by-star/{id}',[BookControllers::class,'Sort_by_star']);
+//book list/ filter by star
+Route::get('/filter-by-star/{id}',[BookControllers::class,'Filter_by_star']);
+
+//book list/ sort by on sale
+Route::get('/sort-by-onsale',[BookControllers::class,'Sort_by_onsale']);
+
+//book list/ sort by popular
+Route::get('/sort-by-popular',[BookControllers::class,'Sort_by_popular']);
+
+//book list/ sort low to high price
+Route::get('/sort-low-to-high',[BookControllers::class,'Sort_lowtohigh_price']);
+
+//book list/ sort low to high price
+Route::get('/sort-high-to-low',[BookControllers::class,'Sort_hightolow_price']);
+
 
 
 
