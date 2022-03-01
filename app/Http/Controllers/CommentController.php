@@ -44,17 +44,23 @@ class CommentController extends Controller
         return $sort_comment;
     }
 
-//    public function Show_comment_per_page($id){
-//        $comment_perpage = DB::table(book)
-//            ->join('review','book.id','=','review.book_id')
+    public function Comment_paginate($id){
+        $comment_perpage = DB::table(book)
+            ->join('review','book.id','=','review.book_id')
+            ->where('book.id',$id)
+            ->select('book.id','review.review_date','review.rating_start')
+            ->orderBy('review.review_date')
+            ->paginate(5)
+            ->get();
+//        $comment_perpage = Review::with('book')
 //            ->where('book.id',$id)
 //            ->select('book.id','review.review_date','review.rating_start')
 //            ->orderBy('review.review_date')
-//            ->paginate(20)
+//            ->paginate(5)
 //            ->get();
 //
-//        return $comment_perpage;
-//    }
+        return $comment_perpage;
+    }
 
     /**
      * Store a newly created resource in storage.

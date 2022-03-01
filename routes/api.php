@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeControllers;
 use  App\Http\Controllers\BookControllers;
 use  App\Http\Controllers\OrderControllers;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserControllers;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -80,7 +83,16 @@ Route::get('/sort-comment-newest/{id}',[\App\Http\Controllers\CommentController:
 //Sort comment oldest
 Route::get('/sort-comment-eldest/{id}',[\App\Http\Controllers\CommentController::class,'Sort_comment_oldest']);
 //Show comment per page
-Route::get('/show-comment-per-page/{id}',[\App\Http\Controllers\CommentController::class,'Show_comment_per_page']);
+Route::get('/show-comment-per-page/{id}',[\App\Http\Controllers\CommentController::class,'Comment_paginate']);
+
+
+//Login
+Route::post('/login', [\App\Http\Controllers\AuthController::class,'store']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/users', [\App\Http\Controllers\UserControllers::class,'index']);
+});
+
 
 //Order
 Route::resource('/order',OrderControllers::class);
