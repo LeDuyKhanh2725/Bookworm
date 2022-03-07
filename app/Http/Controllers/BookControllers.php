@@ -111,9 +111,11 @@ class BookControllers extends Controller
     }
 
 
-    public function show_20_per_page()
+    public function show_product_per_page(Request $request)
     {
-        $booklist = Book::orderby('id', 'DESC')->paginate(20);
+        $size = $request->query('size');
+        $booklist = Book::orderby('id', 'DESC')->paginate($size);
+        print_r($size);
 
         return $booklist;
     }
