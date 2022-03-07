@@ -60,10 +60,9 @@ Route::get('/sort-high-to-low',[BookControllers::class,'Sort_hightolow_price']);
 
 
 
-//book list/show20
-Route::get('/show-20',[BookControllers::class,'show_20_per_page']);
-//book list/show30
-Route::get('/show-30',[BookControllers::class,'show_30_per_page']);
+//book list/show product per page
+Route::post('/show-poduct-perpage',[BookControllers::class,'show_product_per_page']);
+
 
 
 
@@ -77,13 +76,6 @@ Route::get('/all-book-most-discount',[BookControllers::class,'Allbookmostdiscoun
 Route::get('/book-most-popular',[BookControllers::class,'Bookpopular']);
 
 
-//Comment
-//Sort comment newest
-Route::get('/sort-comment-newest/{id}',[\App\Http\Controllers\CommentController::class,'Sort_comment_newest']);
-//Sort comment oldest
-Route::get('/sort-comment-eldest/{id}',[\App\Http\Controllers\CommentController::class,'Sort_comment_oldest']);
-//Show comment per page
-Route::get('/show-comment-per-page/{id}',[\App\Http\Controllers\CommentController::class,'Comment_paginate']);
 
 
 //Login
@@ -91,6 +83,14 @@ Route::post('/login', [\App\Http\Controllers\AuthController::class,'Login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users', [\App\Http\Controllers\UserControllers::class,'User']);
+    Route::get('/users/{id}', [\App\Http\Controllers\UserControllers::class,'getFullNameUser']);
+
+    //Sort comment newest
+    Route::get('/sort-comment-newest/{id}',[\App\Http\Controllers\CommentController::class,'Sort_comment_newest']);
+    //Sort comment oldest
+    Route::get('/sort-comment-eldest/{id}',[\App\Http\Controllers\CommentController::class,'Sort_comment_oldest']);
+    //Show comment per page
+    Route::get('/show-comment-per-page/{id}',[\App\Http\Controllers\CommentController::class,'Comment_paginate']);
 });
 
 
