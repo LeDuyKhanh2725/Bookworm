@@ -87,10 +87,10 @@ Route::get('/show-comment-per-page/{id}',[\App\Http\Controllers\CommentControlle
 
 
 //Login
-Route::post('/login', [\App\Http\Controllers\AuthController::class,'store']);
+Route::post('/login', [\App\Http\Controllers\AuthController::class,'Login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/users', [\App\Http\Controllers\UserControllers::class,'index']);
+    Route::get('/users', [\App\Http\Controllers\UserControllers::class,'User']);
 });
 
 

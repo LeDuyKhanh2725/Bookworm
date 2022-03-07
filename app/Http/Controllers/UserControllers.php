@@ -7,7 +7,7 @@ use App\Models\User;
 
 class UserControllers extends Controller
 {
-    public function index()
+    public function User()
         {
             return response()->json([
                 'data' => User::all(),

@@ -25,8 +25,10 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function Login(Request $request)
     {
+
+
         try {
             $request->validate([
                 'email' => 'email|required',
@@ -41,7 +43,9 @@ class AuthController extends Controller
                     'message' => 'Unauthorized'
                 ]);
             }
-
+            if (Auth::attempt($credentials)) {
+                $userid = auth()->user()->id;
+            }
             $user = User::where('email', $request->email)->first();
 
             if (!Hash::check($request->password, $user->password, [])) {
@@ -52,6 +56,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'status_code' => 200,
+                'user_id'=> $userid,
                 'access_token' => $tokenResult,
                 'token_type' => 'Bearer',
             ]);
@@ -62,7 +67,7 @@ class AuthController extends Controller
                 'error' => $error,
             ]);
         }
-    }
+
     }
 
     /**
