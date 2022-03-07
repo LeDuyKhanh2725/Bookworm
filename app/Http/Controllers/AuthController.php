@@ -46,6 +46,7 @@ class AuthController extends Controller
             if (Auth::attempt($credentials)) {
                 $userid = auth()->user()->id;
             }
+//
             $user = User::where('email', $request->email)->first();
 
             if (!Hash::check($request->password, $user->password, [])) {
@@ -56,7 +57,6 @@ class AuthController extends Controller
 
             return response()->json([
                 'status_code' => 200,
-                'user_id'=> $userid,
                 'access_token' => $tokenResult,
                 'token_type' => 'Bearer',
             ]);
