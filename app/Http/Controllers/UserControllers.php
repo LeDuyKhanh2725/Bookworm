@@ -13,4 +13,10 @@ class UserControllers extends Controller
                 'data' => User::all(),
             ]);
         }
+
+    public function getFullNameUser($id)
+    {
+        $user = User::find($id)->full_name;
+        return $user;
+    }
 }
