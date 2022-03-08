@@ -57,17 +57,12 @@ Route::get('/sort-low-to-high',[BookControllers::class,'Sort_lowtohigh_price']);
 //book list/ sort low to high price
 Route::get('/sort-high-to-low',[BookControllers::class,'Sort_hightolow_price']);
 
-
-
-
 //book list/show product per page
 Route::post('/show-poduct-perpage',[BookControllers::class,'show_product_per_page']);
 
 
-
-
 //Product
-//Home top8 recomment
+//Home top recomment
 Route::get('/top-8-recomment',[BookControllers::class,'BookRecomment']);
 //Book most discount(carousel)
 Route::get('/book-most-discount',[BookControllers::class,'Bookmostdiscount']);
