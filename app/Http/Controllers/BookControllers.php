@@ -48,16 +48,18 @@ class BookControllers extends Controller
     }
 
     //Filter by star
-//    public function Filter_by_star($id)
-//    {
+    public function Filter_by_star($id)
+    {
 //        $author_book = DB::table('book')->orderby('id', 'desc')->get();
 //        $booklistsort = DB::table('review')
 //            ->join('book', 'review.book_id', '=', 'review.id')
 //            ->select('review.book_id')
 //            ->selectRaw('avg(review.rating_start) as avg_ratingstar')
+//            ->havingRaw('avg_ratingstar','>=',$id)
+//            ->groupBy('review.book_id')
 //            ->get();
 //        return $booklistsort;
-//    }
+    }
 
     public function Sort_by_onsale()
     {
@@ -165,7 +167,9 @@ class BookControllers extends Controller
     {
         $bookcarousel = DB::table('book')
             ->join('discount', 'book.id', '=', 'discount.book_id')
-            ->select('book.id')
+            ->join('author', 'book.id', '=', 'author.id')
+            ->select('book.id','book.book_title','book.book_price',
+            'book.book_cover_photo','author.author_name','discount.discount_price')
             ->selectRaw('book.book_price-discount.discount_price as discount_sub')
             ->orderByDesc('discount_sub')
             ->limit(10)
