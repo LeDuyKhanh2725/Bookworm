@@ -18,21 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//layout
-Route::get('/home', function () {
-    return view('Pages.homepages');
-});
-
-Route::get('/shop-pages', function () {
-    return view('pages.shoppages');
-});
-
-Route::get('/cart-pages', function () {
-    return view('pages.cartpages');
-});
-
-Route::get('/about-pages', function () {
-    return view('pages.aboutpages');
-});
-
+Route::view('/{path?}', 'welcome');
 
