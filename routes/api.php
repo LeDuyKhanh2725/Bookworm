@@ -24,18 +24,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //layout
-Route::get('/home', function () {
-    return view('Pages.homepages');
-});
-Route::get('/shop-pages', function () {
-    return view('pages.shoppages');
-});
-Route::get('/cart-pages', function () {
-    return view('pages.cartpages');
-});
-Route::get('/about-pages', function () {
-    return view('pages.aboutpages');
-});
+// Route::get('/', function () {
+//     return ('Pages.homepages');
+// });
+// Route::get('/shop-pages', function () {
+//     return ('pages.shoppages');
+// });
+// Route::get('/cart-pages', function () {
+//     return ('pages.cartpages');
+// });
+// Route::get('/about-pages', function () {
+//     return ('pages.aboutpages');
+// });
 
 
 
@@ -63,7 +63,7 @@ Route::post('/show-poduct-perpage',[BookControllers::class,'show_product_per_pag
 
 //Product
 //Home top recomment
-Route::get('/top-8-recomment',[BookControllers::class,'BookRecomment']);
+Route::get('/book-most-recomment',[BookControllers::class,'BookRecomment']);
 //Book most discount(carousel)
 Route::get('/book-most-discount',[BookControllers::class,'Bookmostdiscount']);
 Route::get('/all-book-most-discount',[BookControllers::class,'Allbookmostdiscount']);
