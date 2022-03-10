@@ -134,11 +134,14 @@ class BookControllers extends Controller
     {
         $recommentbook = DB::table('book')
             ->join('review', 'book.id', '=', 'review.book_id')
+            ->join('author','book.author_id','=','author.id')
             ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
-            ->select('review.book_id')
+            ->select('review.book_id','book.book_title','book.book_price','book.book_cover_photo',
+            'author.author_name','discount.discount_price')
             ->selectRaw('avg(review.rating_start) as avg_ratingstar')
             ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
-            ->groupBy('review.book_id', 'discount.discount_price', 'book.book_price')
+            ->groupBy('review.book_id', 'discount.discount_price', 'book.book_price',
+            'book.book_title','book.book_cover_photo','author.author_name')
             ->orderByDesc('avg_ratingstar')
             ->orderBy('final_price')
             ->limit(8)
@@ -152,13 +155,16 @@ class BookControllers extends Controller
         $popularbook = DB::table('book')
             ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
             ->join('review', 'book.id', '=', 'review.book_id')
-            ->select('review.book_id')
+            ->join('author','book.author_id','=','author.id')
+            ->select('review.book_id','book.book_title','book.book_cover_photo',
+            'author.author_name','discount.discount_price')
             ->selectRaw('count(review.rating_start) as total_review')
             ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
-            ->groupBy('review.book_id', 'discount.discount_price', 'book.book_price')
+            ->groupBy('review.book_id','book.book_title','author.author_name','book.book_cover_photo',
+            'discount.discount_price', 'book.book_price')
             ->orderByDesc('total_review')
             ->orderBy('final_price')
-            ->limit(10)
+            ->limit(8)
             ->get();
         return $popularbook;
     }
@@ -167,7 +173,7 @@ class BookControllers extends Controller
     {
         $bookcarousel = DB::table('book')
             ->join('discount', 'book.id', '=', 'discount.book_id')
-            ->join('author', 'book.id', '=', 'author.id')
+            ->join('author', 'book.author_id', '=', 'author.id')
             ->select('book.id','book.book_title','book.book_price',
             'book.book_cover_photo','author.author_name','discount.discount_price')
             ->selectRaw('book.book_price-discount.discount_price as discount_sub')
@@ -181,11 +187,13 @@ class BookControllers extends Controller
     public function Allbookmostdiscount()
     {
         $allbookcarousel = DB::table('book')
-            ->join('discount', 'book.id', '=', 'discount.book_id')
-            ->select('book.id')
-            ->selectRaw('book.book_price-discount.discount_price as discount_sub')
-            ->orderByDesc('discount_sub')
-            ->get();
+        ->join('discount', 'book.id', '=', 'discount.book_id')
+        ->join('author', 'book.id', '=', 'author.id')
+        ->select('book.id','book.book_title','book.book_price',
+        'book.book_cover_photo','author.author_name','discount.discount_price')
+        ->selectRaw('book.book_price-discount.discount_price as discount_sub')
+        ->orderByDesc('discount_sub')
+        ->get();
 
         return $allbookcarousel;
     }
