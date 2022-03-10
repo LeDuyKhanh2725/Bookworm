@@ -8,13 +8,13 @@ function Header() {
     <>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">Bookworm</Navbar.Brand>
+          <Navbar.Brand href="/">Bookworm</Navbar.Brand>
           <Nav className="ms-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#home">Shop</Nav.Link>
-            <Nav.Link href="#features">Cart</Nav.Link>
-            <Nav.Link href="#pricing">About</Nav.Link>
-            <Nav.Link href="#pricing">Login</Nav.Link>
+          <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/shop-pages">Shop</Nav.Link>
+            <Nav.Link href="/cart-pages">Cart</Nav.Link>
+            <Nav.Link href="/about-pages">About</Nav.Link>
+            <Nav.Link href="/login">Login</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
