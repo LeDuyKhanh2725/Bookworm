@@ -31,6 +31,10 @@ class BookControllers extends Controller
 //        $category_book = DB::table('category')->orderby('id', 'desc')->get();
         $bookfiltercate = DB::table('book')
             ->join('category', 'book.category_id', '=', 'category.id')
+            ->join('author','book.author_id','=','author.id')
+            ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
+            ->select('book.id','book.book_title','book.book_cover_photo','book.book_price',
+            'discount.discount_price','author.author_name')
             ->where('category.id', $id)
             ->get();
         return $bookfiltercate;
@@ -42,6 +46,9 @@ class BookControllers extends Controller
 //        $author_book = DB::table('author')->orderby('id', 'desc')->get();
         $booklistsort = DB::table('book')
             ->join('author', 'book.author_id', '=', 'author.id')
+            ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
+            ->select('book.id','book.book_title','book.book_cover_photo','book.book_price',
+            'discount.discount_price','author.author_name')
             ->where('author.id', $id)
             ->get();
         return $booklistsort;
@@ -66,7 +73,9 @@ class BookControllers extends Controller
 //        $discount_book = DB::table('discount')->get();
         $book_onsale = DB::table('book')
             ->join('discount', 'book.id', '=', 'discount.book_id')
-            ->select('book.id')
+            ->join('author', 'book.author_id', '=', 'author.id')
+            ->select('book.id','book.book_title','book.book_cover_photo',
+            'book.book_price','author.author_name','discount.discount_price')
             ->get();
         return $book_onsale;
     }
@@ -74,15 +83,18 @@ class BookControllers extends Controller
     public function Sort_by_popular()
     {
         $popularbook = DB::table('book')
-            ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
-            ->join('review', 'book.id', '=', 'review.book_id')
-            ->select('review.book_id')
-            ->selectRaw('count(review.rating_start) as total_review')
-            ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
-            ->groupBy('review.book_id', 'discount.discount_price', 'book.book_price')
-            ->orderByDesc('total_review')
-            ->orderBy('final_price')
-            ->get();
+        ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
+        ->join('review', 'book.id', '=', 'review.book_id')
+        ->join('author','book.author_id','=','author.id')
+        ->select('review.book_id','book.book_title','book.book_cover_photo','book.book_price',
+        'author.author_name','discount.discount_price')
+        ->selectRaw('count(review.rating_start) as total_review')
+        ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
+        ->groupBy('review.book_id','book.book_title','author.author_name','book.book_cover_photo',
+        'discount.discount_price', 'book.book_price')
+        ->orderByDesc('total_review')
+        ->orderBy('final_price')
+        ->get();
         return $popularbook;
     }
 
@@ -91,9 +103,11 @@ class BookControllers extends Controller
 //        $discount = DB::table('discount')->get();
         $sort_low = DB::table('book')
             ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
-            ->select('book.id')
+            ->join('author', 'book.author_id', '=', 'author.id')
+            ->select('book.id','book.book_title','book.book_cover_photo','book.book_price',
+            'discount.discount_price','author.author_name')
             ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
-            ->groupBy('book.id', 'discount.discount_price', 'book.book_price')
+            ->groupBy('book.id', 'discount.discount_price', 'book.book_price','author.author_name')
             ->orderBy('final_price')
             ->get();
         return $sort_low;
@@ -104,9 +118,11 @@ class BookControllers extends Controller
 //        $discount = DB::table('discount')->get();
         $sort_high = DB::table('book')
             ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
-            ->select('book.id')
+            ->join('author','book.author_id','=','author.id')
+            ->select('book.id','book.book_title','book.book_cover_photo','book.book_price',
+            'discount.discount_price','author.author_name')
             ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
-            ->groupBy('book.id', 'discount.discount_price', 'book.book_price')
+            ->groupBy('book.id', 'discount.discount_price', 'book.book_price','author.author_name')
             ->orderByDesc('final_price')
             ->get();
         return $sort_high;
@@ -156,7 +172,7 @@ class BookControllers extends Controller
             ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
             ->join('review', 'book.id', '=', 'review.book_id')
             ->join('author','book.author_id','=','author.id')
-            ->select('review.book_id','book.book_title','book.book_cover_photo',
+            ->select('review.book_id','book.book_title','book.book_cover_photo','book.book_price',
             'author.author_name','discount.discount_price')
             ->selectRaw('count(review.rating_start) as total_review')
             ->selectRaw('(CASE WHEN discount.discount_price IS null THEN book.book_price ELSE discount.discount_price END) as final_price')
