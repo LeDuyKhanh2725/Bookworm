@@ -5,34 +5,46 @@ import Carousel from '../home/Carousel'
 import Featurebook from './featurebook/Featurebook'
 function Home() {
   const [state, setState] = useState({
-    listBook: [],
-    listRecommentbook: [],
-    listPopularbook: []
+    listCarousel: [],
+    listFeaturebook: [],
+    currentFeature: 'recomment',
   });
-
   console.log(state);
   useEffect(async () => {
-    const getData = await axios.get('http://127.0.0.1:8000/api/book-most-discount');
+    const getDataCarousel = await axios.get('http://127.0.0.1:8000/api/book-most-discount');
     const getDataRecomment = await axios.get('http://127.0.0.1:8000/api/book-most-recomment');
-    const getDataPopular = await axios.get('http://127.0.0.1:8000/api/book-most-popular');
-
-    setState({ listBook: getData.data, listRecommentbook: getDataRecomment.data,
-    listPopularbook: getDataPopular.data })
+    setState({
+      listCarousel: getDataCarousel.data, listFeaturebook: getDataRecomment.data, currentFeature: 'recomment'
+    })
   }, [])
-
+  const changeFeature = async (type) => {
+    if (type === 'recomment') {
+      const res = await axios.get('http://127.0.0.1:8000/api/book-most-recomment');
+      setState({
+        ...state, listFeaturebook: res.data, currentFeature: 'recomment'
+      });
+      return;
+    }
+    if (type === 'popular') {
+      const res = await axios.get('http://127.0.0.1:8000/api/book-most-popular');
+      setState({
+        ...state, listFeaturebook: res.data, currentFeature: 'popular'
+      });
+      return;
+    }
+  }
   return (
     <>
-      <Carousel list={state.listBook} />
-     <br></br>
-      <Featurebook list={state.listRecommentbook}/>
-      <Featurebook list={state.listPopularbook}/>
-      </>
-      
-      
+      <Carousel list={state.listCarousel} />
+      <br></br>
+      <div className='text-center'><h2>Featurebook</h2>
+        <ButtonGroup aria-label="Basic example">
+          <Button variant="success" onClick={() => changeFeature('recomment')}>Recomment</Button>
+          <Button variant="success" onClick={() => changeFeature('popular')}>Popular</Button>
+        </ButtonGroup></div>
+      <Featurebook list={state.listFeaturebook} />
+    </>
   )
-
-
-  
 }
 
 export default Home

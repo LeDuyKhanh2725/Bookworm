@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, ButtonGroup, Card, Container, Row } from 'react-bootstrap'
 
-function Featurebook({list}) {
+function Featurebook({ list }) {
     const renderListItem = (list = []) => {
         return list.map((item) => {
             return (
@@ -18,24 +18,16 @@ function Featurebook({list}) {
             )
         })
     }
-  return (
-      <>
-      <div className='text-center'><h2>Featurebook</h2>
-      <ButtonGroup aria-label="Basic example">
-      <Button variant="secondary">Recomment</Button>
-      <Button variant="secondary">Popular</Button>
-      </ButtonGroup></div>
-      <br></br>
-      
+    return (
+        <>
+            <Container >
+                <Row>
+                    {renderListItem(list)}
+                </Row>
+            </Container>
+        </>
 
-    <Container >
-        <Row>
-        {renderListItem(list)}
-        </Row>
-    </Container>
-      </>
-    
-  )
+    )
 }
 
 export default Featurebook
