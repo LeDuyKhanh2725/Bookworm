@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
 import Carousel from '../home/Carousel'
 import Featurebook from './featurebook/Featurebook'
 function Home() {
@@ -35,14 +35,18 @@ function Home() {
   }
   return (
     <>
+      <Container>
       <Carousel list={state.listCarousel} />
-      <br></br>
-      <div className='text-center'><h2>Featurebook</h2>
-        <ButtonGroup aria-label="Basic example">
-          <Button variant="success" onClick={() => changeFeature('recomment')}>Recomment</Button>
-          <Button variant="success" onClick={() => changeFeature('popular')}>Popular</Button>
-        </ButtonGroup></div>
-      <Featurebook list={state.listFeaturebook} />
+
+        <br></br>
+        <div className='text-center'><h2>Featurebook</h2>
+          <ButtonGroup aria-label="Basic example">
+            <Button variant="secondary" onClick={() => changeFeature('recomment')}>Recomment</Button>
+            <Button variant="success" onClick={() => changeFeature('popular')}>Popular</Button>
+          </ButtonGroup></div>
+        <br></br>
+        <Featurebook list={state.listFeaturebook} />
+      </Container>
     </>
   )
 }
