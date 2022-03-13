@@ -22,4 +22,5 @@ class Book extends Model
     public function Review(){
         return $this->hasMany('App\Models\Review');
     }
+    
 }
