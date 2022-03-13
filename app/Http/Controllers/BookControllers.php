@@ -20,7 +20,14 @@ class BookControllers extends Controller
     //Shop page
     public function index()
     {
-        $booklist = Book::all();
+        // $booklist = Book::all();
+        $booklist = DB::table('book')
+        ->join('category', 'book.category_id', '=', 'category.id')
+        ->join('author','book.author_id','=','author.id')
+        ->leftJoin('discount', 'book.id', '=', 'discount.book_id')
+        ->select('book.id','book.book_title','book.book_cover_photo','book.book_price',
+            'discount.discount_price','author.author_name')
+        ->get();
 
         return $booklist;
     }
