@@ -10,6 +10,8 @@ import Login from './pages/login/Login';
 import { BrowserRouter as Router } from "react-router-dom";
 // import Carousel from './pages/home/Carousel';
 import { Routes, Route } from 'react-router-dom'
+import Footer from './component/footer/Footer';
+
 
 function App() {
   console.log(123);
@@ -25,6 +27,7 @@ function App() {
           <Route path='/login' element={<Login />} />
         </Routes>
       </Router>
+      <Footer/>
     </React.Fragment>
   )
 }
