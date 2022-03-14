@@ -30,7 +30,7 @@ function About() {
             Curabitur sagittis ultrices condimentum.</p>
           </Col>
           <Col sm={3}>
-            <h4>Our Vision</h4>
+            <h4>Our Story</h4>
             <p>Pellentesque sodales augue eget ultricies ultricies. 
             Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
             Curabitur sagittis ultrices condimentum.</p>
