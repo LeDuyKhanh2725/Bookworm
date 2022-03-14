@@ -61,6 +61,6 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-install "react-bootstrap": "^2.2.0",
+install "react-bootstrap": "^2.2.0" with "npm install react-bootstrap bootstrap@5.1.3",
         "react-router-dom": "^6.2.2",
         "swiper": "^8.0.7"
