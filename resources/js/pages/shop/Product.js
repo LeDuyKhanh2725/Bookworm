@@ -19,7 +19,7 @@ function Product({ list }) {
                             {item.author_name}
                         </Card.Text>
                         <Card.Text height={'50px'}>
-                            {item.book_price}/{item.discount_price}
+                            Original-{item.book_price}$/final-{item.discount_price}$
                         </Card.Text>
                     </Card.Body>
                 </Card>
