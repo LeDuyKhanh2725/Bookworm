@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Col, Container, Figure, Row } from 'react-bootstrap'
 import Image from 'react-bootstrap/Image'
 function Footer() {
   return (
@@ -7,7 +7,13 @@ function Footer() {
       <Container className='px-4'>
         <Row>
           <Col sm={'1'}>
-            <Image></Image>
+            <Figure>
+              <Figure.Image
+                width={100}
+                height={150}
+                alt="171x180"
+              />
+            </Figure>
           </Col>
           <Col sm={'1'}>
             <Row><h1 className='text-white'>BookWorm</h1></Row>
