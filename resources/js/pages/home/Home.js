@@ -36,13 +36,21 @@ function Home() {
   return (
     <>
       <Container>
-      <Carousel list={state.listCarousel} />
+      <Row>
+        <Col sm={11}></Col>
+        <Col sm={1}><Button className='bg-dark'>View all</Button></Col>
+      </Row>
+      <Row>
+        
+          <Carousel list={state.listCarousel} />
+        
+      </Row>
 
         <br></br>
         <div className='text-center'><h2>Featurebook</h2>
           <ButtonGroup aria-label="Basic example">
-            <Button variant="secondary" onClick={() => changeFeature('recomment')}>Recomment</Button>
-            <Button variant="success" onClick={() => changeFeature('popular')}>Popular</Button>
+            <Button variant={state.currentFeature === "recomment" ? "success" : "light"} onClick={() => changeFeature('recomment')}>Recomment</Button>
+            <Button variant={state.currentFeature === "popular" ? "success" : "light"} onClick={() => changeFeature('popular')}>Popular</Button>
           </ButtonGroup></div>
         <br></br>
         <Featurebook list={state.listFeaturebook} />
