@@ -26,7 +26,7 @@ function App() {
           <Route path="/about-pages" element={<About />} />
           <Route path='/shop-pages' element={<Shop />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/book-list/{id}' element={<ProductDetail/>}></Route>
+          <Route path='/detail' element={<ProductDetail/>}></Route>
         </Routes>
       </Router>
       <Footer/>
