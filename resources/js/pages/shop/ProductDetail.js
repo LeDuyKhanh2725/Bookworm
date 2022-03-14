@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Container, NavItem, Row } from 'react-bootstrap'
+import { Col, Container, Figure, NavItem, Row } from 'react-bootstrap'
 
 function ProductDetail() {
   return (
@@ -10,16 +10,26 @@ function ProductDetail() {
             </Row>
             <Row className='product'>
                 <Col className='product_infor' sm={9}>
-                    <Col className='image' sm={3}></Col>
+                    <Col className='image' sm={3}>
+                        <Figure>
+                            <Figure.Image/>
+                        </Figure>
+                    </Col>
                     <Col className='book_infor' sm={9}>
                         <Row className='book_title'>
-                            <h2>{NavItem.book_title}</h2>
+                            <h2>Book Title</h2>
                         </Row>
                         <Row className='book_description'>
-                            <p>{NavItem.book_summary}</p>
+                            <p>Book description.Book description.Book description.Book description
+                            Book description.Book description.Book description.Book description</p>
                         </Row>
                     </Col>
                 </Col>
+                <Col sm={3}><p>Add to cart</p></Col>
+            </Row>
+            <Row className='comment'>
+                <Col sm={9}></Col>
+
                 <Col sm={3}></Col>
             </Row>
         </Container>
