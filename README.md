@@ -60,3 +60,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+install "react-bootstrap": "^2.2.0",
+        "react-router-dom": "^6.2.2",
+        "swiper": "^8.0.7"
