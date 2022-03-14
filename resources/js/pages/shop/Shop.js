@@ -94,17 +94,17 @@ function Shop() {
                 <Row>
                         <Form.Select aria-label="Default select example">
                         <option>Category</option>
-                        <option onClick={()=>chanceFilter('')} value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option onClick={()=>chanceFilter('')} value="1">Category1</option>
+                        <option value="2">Category2</option>
+                        <option value="3">Category3</option>
                         </Form.Select>
                     </Row>
                     <Row>
                         <Form.Select aria-label="Default select example">
                         <option>Author</option>
                         <option value="1">Author1</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option value="2">Author2</option>
+                        <option value="3">Author3</option>
                         </Form.Select>
                     </Row>
                 </Col>
