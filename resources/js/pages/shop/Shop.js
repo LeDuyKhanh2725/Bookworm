@@ -14,12 +14,7 @@ function Shop() {
   });
   useEffect(async () =>{
     const getData = await axios.get('http://127.0.0.1:8000/api/book-list');
-    const getDataonsale = await axios.get('');
-    const getDataPopular = await axios.get('');
-    const getDatalow = await axios.get('');
-    const getDatahigh = await axios.get('');
-    const getDatacate = await axios.get('');
-    const getDataauthor = await axios.get('');
+    
   setState({listbook:getData.data,currentBook:'currentbook'})
   },[])
 
@@ -83,10 +78,10 @@ function Shop() {
                     <Row>
                         <Col sm={8}>
                             <ButtonGroup>
-                                <Button onClick={()=>chanceFilter('onsale')}>Sort by onsale</Button>
-                                <Button onClick={()=>chanceFilter('popular')}>Sort by Popular</Button>
-                                <Button onClick={()=>chanceFilter('lowhigh')}>Sort Low to High Price</Button>
-                                <Button onClick={()=>chanceFilter('highlow')}>Sort High to Low</Button>
+                                <Button className='bg-dark' onClick={()=>chanceFilter('onsale')}>Sort by onsale</Button>
+                                <Button className='bg-dark' onClick={()=>chanceFilter('popular')}>Sort by Popular</Button>
+                                <Button className='bg-dark' onClick={()=>chanceFilter('lowhigh')}>Sort Low to High Price</Button>
+                                <Button className='bg-dark' onClick={()=>chanceFilter('highlow')}>Sort High to Low</Button>
                             </ButtonGroup>
                         </Col>
                         <Col sm={4}></Col>
